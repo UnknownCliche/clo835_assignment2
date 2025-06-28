@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: web-pod
+  namespace: web
+  labels:
+    app: employees
+spec:
+  containers:
+  - name: web
+    image: 159127173275.dkr.ecr.us-east-1.amazonaws.com/webapp:36bdc1f9db06fdcaea8439901d5d1cfd43bddc37
+    ports:
+    - containerPort: 80
+    env:
+    - name: DB_HOST
+      value: "10.244.0.8"
+    - name: DB_USER
+      value: "root"
+    - name: DB_PASSWORD
+      value: "password"
+    - name: DB_NAME
+      value: "employees"
+    - name: DBPORT
+      value: "3306"
+  imagePullSecrets:
+  - name: ecr-secret
