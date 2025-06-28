@@ -8,19 +8,21 @@ metadata:
 spec:
   containers:
   - name: web
-    image: 159127173275.dkr.ecr.us-east-1.amazonaws.com/webapp:36bdc1f9db06fdcaea8439901d5d1cfd43bddc37
+    image: 159127173275.dkr.ecr.us-east-1.amazonaws.com/webapp:v2  # New tag if rebuilt
     ports:
     - containerPort: 80
     env:
-    - name: DB_HOST
+    - name: DBHOST
       value: "10.244.0.8"
-    - name: DB_USER
+    - name: DBUSER
       value: "root"
-    - name: DB_PASSWORD
+    - name: DBPWD
       value: "password"
-    - name: DB_NAME
+    - name: DATABASE
       value: "employees"
     - name: DBPORT
       value: "3306"
+    - name: APP_COLOR
+      value: "lime"  # From app.py
   imagePullSecrets:
   - name: ecr-secret
