@@ -1,13 +1,27 @@
 FROM ubuntu:20.04
-RUN apt-get update -y
-COPY . /app
+
+# Set noninteractive mode to avoid prompts during installation
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install dependencies and clean up
+RUN apt-get update -y && \
+    apt-get install -y python3-pip mysql-client && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Set working directory
 WORKDIR /app
-RUN set -xe \
-    && apt-get update -y \
-    && apt-get install -y python3-pip \
-    && apt-get install -y mysql-client 
-RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
+
+# Copy application files and templates
+COPY app.py requirements.txt ./
+COPY templates/ templates/
+
+# Install Python dependencies
+RUN pip3 install --upgrade pip && \
+    pip3 install -r requirements.txt
+
+# Expose port
 EXPOSE 8080
-ENTRYPOINT [ "python3" ]
-CMD [ "app.py" ]
+
+# Run the application
+CMD ["python3", "app.py"]
