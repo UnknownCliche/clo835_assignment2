@@ -10,7 +10,7 @@ spec:
   - name: web
     image: 159127173275.dkr.ecr.us-east-1.amazonaws.com/webapp:v3
     ports:
-    - containerPort: 80
+    - containerPort: 8080
     env:
     - name: DBHOST
       value: "10.244.0.8"
